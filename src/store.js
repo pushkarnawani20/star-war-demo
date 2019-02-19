@@ -1,12 +1,13 @@
-import {createStore,combineReducers,applyMiddleware} from 'redux';
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import loginReducer from './reducer/loginReducer';
+import userReducer from "./Reducer/UserReducer";
+import starReducer from "./Reducer/StarReducer";
 const store = createStore(
-  combineReducers(
-    {
-      loginReducer
-    }
-  ),{},
+  combineReducers({
+    user: userReducer,
+    stars: starReducer
+  }),
+  {},
   applyMiddleware(thunk)
 );
 export default store;

@@ -1,0 +1,6 @@
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const FETCH_PLANET_LIST = "FETCH_PLANET_LIST";
+export const FETCH_SEARCHLIST = "FETCH_SEARCHLIST";
+export const CLEAR_SEARCH = "CLEAR_SEARCH";

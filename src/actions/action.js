@@ -1,49 +1,26 @@
-import axios from 'axios';
+import * as types from "./Types";
 
-export function processUserDetails(data){
-	return (dispatch) => {
-    axios.get(`https://swapi.co/api/people/?search=${data.username}`)
-    .then(res => {
-      const persons = res.data;
-      if(persons.results){
-        if(data.password == persons.results[0].birth_year){
-          alert("valid user");
-          dispatch(loginSucess(true));
-        }else{
-          alert("not valid password");
-          dispatch(notValidUser(false));
-        }
-      }else{
-        alert("not valid username");
-        dispatch(notValidUser(false));
-      }
-    });
-  };
-}
-export function fetchList(){
-  return (dispatch) => {
-    axios.get(`https://swapi.co/api/planets/`)
-    .then(res => {
-      const personsList = res.data;
-      dispatch(listValues(personsList.results));
-    });
-  };
-}
-export function loginSucess(val){
-  return{
-    type:"Login_Sucess",
-    payload:val
-  };
-}
-export function notValidUser(val){
-  return{
-    type:"Login_error",
-    payload:val
-  };
-}
-export function listValues(data){
-  return{
-    type:"Fetch_list",
-    payload:data
-  };
-}
+export const loginUser = isLogin => ({
+  type: types.LOGIN_SUCCESS,
+  payload: isLogin
+});
+export const logOut = () => ({ type: types.LOGOUT_USER });
+
+export const notValidUser = isValidUser => ({
+  type: types.LOGIN_ERROR,
+  payload: isValidUser
+});
+
+export const fetchPlanetList = dataList => ({
+  type: types.FETCH_PLANET_LIST,
+  payload: dataList
+});
+
+export const fetchSearchData = data => ({
+  type: types.FETCH_SEARCHLIST,
+  payload: data
+});
+
+export const clearSearchList = () => ({
+  type: types.CLEAR_SEARCH
+});

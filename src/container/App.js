@@ -1,40 +1,51 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Login from './Login';
-import Home from './Home';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Router, Route, Link } from "react-router-dom";
+import { userLogout } from "../Actions/ActionCreators";
+import history from "../history";
+import Login from "./Login";
+import Home from "./Home";
+
 class App extends Component {
   render() {
-    const islogin = this.props.islogin.isLogin;
+    const { user } = this.props.userList;
     return (
       <div className="App">
-        <Router>
-            <>
-              <ul className="navBar">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  { islogin ? (<Link to="/login">Logout</Link>) : null }
-                </li>
-              </ul>
-              <section className="container">
-                <Route exact path="/" component={Home} />
-                <Route path="/login" component={Login} />
-              </section>
-            </>
-          </Router>
+        <Router history={history}>
+          <>
+            <ul className="navBar">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>{!user.isLogin ? <Link to="/login">Login</Link> : null}</li>
+              <li>
+                {user.isLogin ? (
+                  <button onClick={this.props.logout}>Logout</button>
+                ) : null}
+              </li>
+            </ul>
+            <section className="container">
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={Login} />
+            </section>
+          </>
+        </Router>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    islogin:state.loginReducer
+    userList: state
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(userLogout())
   };
 };
 
-export default connect(mapStateToProps,null)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
